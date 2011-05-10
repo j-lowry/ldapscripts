@@ -1,0 +1,21 @@
+bin_SCRIPTS = ldapaddgroup\
+		 ldapaddmachine\
+		ldapadduser\
+		ldapaddusertogroup\
+		ldapdeletegroup\
+		ldapdeletemachine\ 
+		ldapdeleteuser\ 
+		ldapdeleteuserfromgroup\
+		ldapfinger\ 
+		ldapgid\
+		ldapid\
+		ldapinit\
+		ldapmodifygroup\ 
+		ldapmodifymachine\
+		ldapmodifyuser\ 
+		ldaprenamegroup\ 
+		ldaprenamemachine\ 
+		ldaprenameuser\ 
+		ldapsetpasswd\ 
+		ldapsetprimarygroup\ 
+		lsldap
