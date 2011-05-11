@@ -1,3 +1,4 @@
+## Process this file with automake to produce Makefile.in
 man1_MANS = ldapaddgroup.1\
 		ldapaddmachine.1\
 		ldapadduser.1\
