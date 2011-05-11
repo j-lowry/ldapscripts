@@ -3,19 +3,19 @@ sbin_SCRIPTS = ldapaddgroup\
 		ldapadduser\
 		ldapaddusertogroup\
 		ldapdeletegroup\
-		ldapdeletemachine\ 
+		ldapdeletemachine\
 		ldapdeleteuser\
 		ldapdeleteuserfromgroup\
 		ldapfinger\
 		ldapgid\
 		ldapid\
 		ldapinit\
-		ldapmodifygroup\ 
+		ldapmodifygroup\
 		ldapmodifymachine\
 		ldapmodifyuser\
-		ldaprenamegroup\ 
-		ldaprenamemachine\ 
+		ldaprenamegroup\
+		ldaprenamemachine\
 		ldaprenameuser\
 		ldapsetpasswd\
-		ldapsetprimarygroup\ 
+		ldapsetprimarygroup\
 		lsldap

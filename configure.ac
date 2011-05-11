@@ -1,4 +1,4 @@
-AC_INIT([ldapscripts], [ganael.laplanche@martymac.org] [2.0.1])
+AC_INIT([ldapscripts], [2.0.1], [ganael.laplanche@martymac.org])
 AM_INIT_AUTOMAKE
 AC_CONFIG_FILES([Makefile
                  etc/Makefile
