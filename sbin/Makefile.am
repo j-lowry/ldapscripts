@@ -1,21 +1,21 @@
-bin_SCRIPTS = ldapaddgroup\
-		 ldapaddmachine\
+sbin_SCRIPTS = ldapaddgroup\
+		ldapaddmachine\
 		ldapadduser\
 		ldapaddusertogroup\
 		ldapdeletegroup\
 		ldapdeletemachine\ 
-		ldapdeleteuser\ 
+		ldapdeleteuser\
 		ldapdeleteuserfromgroup\
-		ldapfinger\ 
+		ldapfinger\
 		ldapgid\
 		ldapid\
 		ldapinit\
 		ldapmodifygroup\ 
 		ldapmodifymachine\
-		ldapmodifyuser\ 
+		ldapmodifyuser\
 		ldaprenamegroup\ 
 		ldaprenamemachine\ 
-		ldaprenameuser\ 
-		ldapsetpasswd\ 
+		ldaprenameuser\
+		ldapsetpasswd\
 		ldapsetprimarygroup\ 
 		lsldap
