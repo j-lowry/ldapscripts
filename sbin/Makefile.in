@@ -33,7 +33,8 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 subdir = sbin
-DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
+DIST_COMMON = $(dist_sbin_SCRIPTS) $(srcdir)/Makefile.am \
+	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -63,7 +64,7 @@ am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
 am__installdirs = "$(DESTDIR)$(sbindir)"
-SCRIPTS = $(sbin_SCRIPTS)
+SCRIPTS = $(dist_sbin_SCRIPTS)
 SOURCES =
 DIST_SOURCES =
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -145,7 +146,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-sbin_SCRIPTS = ldapaddgroup\
+dist_sbin_SCRIPTS = ldapaddgroup\
 		ldapaddmachine\
 		ldapadduser\
 		ldapaddusertogroup\
@@ -167,6 +168,30 @@ sbin_SCRIPTS = ldapaddgroup\
 		ldapsetprimarygroup\
 		lsldap
 
+CLEANFILES = $(dist_sbin_SCRIPTS)
+EXTRA_DIST = ldapaddgroup.in\
+		ldapaddmachine.in\
+		ldapadduser.in\
+		ldapaddusertogroup.in\
+		ldapdeletegroup.in\
+		ldapdeletemachine.in\
+		ldapdeleteuser.in\
+		ldapdeleteuserfromgroup.in\
+		ldapfinger.in\
+		ldapgid.in\
+		ldapid.in\
+		ldapinit.in\
+		ldapmodifygroup.in\
+		ldapmodifymachine.in\
+		ldapmodifyuser.in\
+		ldaprenamegroup.in\
+		ldaprenamemachine.in\
+		ldaprenameuser.in\
+		ldapsetpasswd.in\
+		ldapsetprimarygroup.in\
+		lsldap.in
+
+do_subst = sed -e 's,[@]libexecdir[@],$(libexecdir),g'
 all: all-am
 
 .SUFFIXES:
@@ -200,10 +225,10 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-install-sbinSCRIPTS: $(sbin_SCRIPTS)
+install-dist_sbinSCRIPTS: $(dist_sbin_SCRIPTS)
 	@$(NORMAL_INSTALL)
 	test -z "$(sbindir)" || $(MKDIR_P) "$(DESTDIR)$(sbindir)"
-	@list='$(sbin_SCRIPTS)'; test -n "$(sbindir)" || list=; \
+	@list='$(dist_sbin_SCRIPTS)'; test -n "$(sbindir)" || list=; \
 	for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  if test -f "$$d$$p"; then echo "$$d$$p"; echo "$$p"; else :; fi; \
@@ -226,9 +251,9 @@ install-sbinSCRIPTS: $(sbin_SCRIPTS)
 	     } \
 	; done
 
-uninstall-sbinSCRIPTS:
+uninstall-dist_sbinSCRIPTS:
 	@$(NORMAL_UNINSTALL)
-	@list='$(sbin_SCRIPTS)'; test -n "$(sbindir)" || exit 0; \
+	@list='$(dist_sbin_SCRIPTS)'; test -n "$(sbindir)" || exit 0; \
 	files=`for p in $$list; do echo "$$p"; done | \
 	       sed -e 's,.*/,,;$(transform)'`; \
 	test -n "$$list" || exit 0; \
@@ -295,6 +320,7 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
+	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
@@ -329,7 +355,7 @@ install-dvi: install-dvi-am
 
 install-dvi-am:
 
-install-exec-am: install-sbinSCRIPTS
+install-exec-am: install-dist_sbinSCRIPTS
 
 install-html: install-html-am
 
@@ -367,21 +393,114 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-sbinSCRIPTS
+uninstall-am: uninstall-dist_sbinSCRIPTS
 
 .MAKE: install-am install-strip
 
 .PHONY: all all-am check check-am clean clean-generic distclean \
 	distclean-generic distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-sbinSCRIPTS install-strip installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am uninstall \
-	uninstall-am uninstall-sbinSCRIPTS
+	install install-am install-data install-data-am \
+	install-dist_sbinSCRIPTS install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am install-man install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
+	pdf-am ps ps-am uninstall uninstall-am \
+	uninstall-dist_sbinSCRIPTS
 
+
+ldapaddgroup: ldapaddgroup.in Makefile
+	$(do_subst) < $(srcdir)/ldapaddgroup.in > ldapaddgroup
+	chmod 0755 ldapaddgroup
+
+ldapaddmachine: ldapaddmachine.in Makefile
+	$(do_subst) < $(srcdir)/ldapaddmachine.in > ldapaddmachine
+	chmod 0755 ldapaddmachine
+
+ldapadduser: ldapadduser.in Makefile
+	$(do_subst) < $(srcdir)/ldapadduser.in > ldapadduser
+	chmod 0755 ldapadduser
+
+ldapaddusertogroup: ldapaddusertogroup.in Makefile
+	$(do_subst) < $(srcdir)/ldapaddusertogroup.in > ldapaddusertogroup
+	chmod 0755 ldapaddusertogroup
+
+ldapdeletegroup: ldapdeletegroup.in Makefile
+	$(do_subst) < $(srcdir)/ldapdeletegroup.in > ldapdeletegroup
+	chmod 0755 ldapdeletegroup
+
+ldapdeletemachine: ldapdeletemachine.in Makefile
+	$(do_subst) < $(srcdir)/ldapdeletemachine.in > ldapdeletemachine
+	chmod 0755 ldapdeletemachine
+
+ldapdeleteuser: ldapdeleteuser.in Makefile
+	$(do_subst) < $(srcdir)/ldapdeleteuser.in > ldapdeleteuser
+	chmod 0755 ldapdeleteuser
+
+ldapdeleteuserfromgroup: ldapdeleteuserfromgroup.in Makefile
+	$(do_subst) < $(srcdir)/ldapdeleteuserfromgroup.in > ldapdeleteuserfromgroup
+	chmod 0755 ldapdeleteuserfromgroup
+
+ldapdeleteuser: ldapdeleteuser.in Makefile
+	$(do_subst) < $(srcdir)/ldapdeleteuser.in > ldapdeleteuser
+	chmod 0755 ldapdeleteuser
+
+ldapfinger: ldapfinger.in Makefile
+	$(do_subst) < $(srcdir)/ldapfinger.in > ldapfinger
+	chmod 0755 ldapfinger
+
+ldapgid: ldapgid.in Makefile
+	$(do_subst) < $(srcdir)/ldapgid.in > ldapgid
+	chmod 0755 ldapgid
+
+ldapid: ldapid.in Makefile
+	$(do_subst) < $(srcdir)/ldapid.in > ldapid
+	chmod 0755 ldapid
+
+ldapinit: ldapinit.in Makefile
+	$(do_subst) < $(srcdir)/ldapinit.in > ldapinit
+	chmod 0755 ldapinit
+
+ldapmodifygroup: ldapmodifygroup.in Makefile
+	$(do_subst) < $(srcdir)/ldapmodifygroup.in > ldapmodifygroup
+	chmod 0755 ldapmodifygroup
+
+ldapmodifymachine: ldapmodifymachine.in Makefile
+	$(do_subst) < $(srcdir)/ldapmodifymachine.in > ldapmodifymachine
+	chmod 0755 ldapmodifymachine
+
+ldapmodifyuser: ldapmodifyuser.in Makefile
+	$(do_subst) < $(srcdir)/ldapmodifyuser.in > ldapmodifyuser
+	chmod 0755 ldapmodifyuser
+
+ldaprenamegroup: ldaprenamegroup.in Makefile
+	$(do_subst) < $(srcdir)/ldaprenamegroup.in > ldaprenamegroup
+	chmod 0755 ldaprenamegroup
+
+ldaprenamemachine: ldaprenamemachine.in Makefile
+	$(do_subst) < $(srcdir)/ldaprenamemachine.in > ldaprenamemachine
+	chmod 0755 ldaprenamemachine
+
+ldaprenameuser: ldaprenameuser.in Makefile
+	$(do_subst) < $(srcdir)/ldaprenameuser.in > ldaprenameuser
+	chmod 0755 ldaprenameuser
+
+ldapsetpasswd: ldapsetpasswd.in Makefile
+	$(do_subst) < $(srcdir)/ldapsetpasswd.in > ldapsetpasswd
+	chmod 0755 ldapsetpasswd
+
+ldapdeleteuser: ldapdeleteuser.in Makefile
+	$(do_subst) < $(srcdir)/ldapdeleteuser.in > ldapdeleteuser
+	chmod 0755 ldapdeleteuser
+
+ldapsetprimarygroup: ldapsetprimarygroup.in Makefile
+	$(do_subst) < $(srcdir)/ldapsetprimarygroup.in > ldapsetprimarygroup
+	chmod 0755 ldapsetprimarygroup
+
+lsldap: lsldap.in Makefile
+	$(do_subst) < ./lsldap.in > lsldap
+	chmod 0755 lsldap
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

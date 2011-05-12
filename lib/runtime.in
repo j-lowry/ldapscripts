@@ -680,7 +680,8 @@ _changepassword () {
 
 ### Source configuration file
 
-_CONFIGFILE="/etc/ldapscripts/ldapscripts.conf"
+#_CONFIGFILE="/etc/ldapscripts/ldapscripts.conf"
+_CONFIGFILE="@sysconfdir@/ldapscripts.conf"
 . "$_CONFIGFILE" || end_die "Unable to source configuration file ($_CONFIGFILE), exiting..."
 
 ### Checks and defaults ###

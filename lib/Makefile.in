@@ -147,6 +147,9 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 dist_libexec_SCRIPTS = runtime
+CLEANFILES = $(dist_libexec_SCRIPTS)
+EXTRA_DIST = runtime.in
+do_subst = sed -e 's,[@]sysconfdir[@],$(sysconfdir),g'
 all: all-am
 
 .SUFFIXES:
@@ -275,6 +278,7 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
+	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
@@ -363,6 +367,10 @@ uninstall-am: uninstall-dist_libexecSCRIPTS
 	pdf-am ps ps-am uninstall uninstall-am \
 	uninstall-dist_libexecSCRIPTS
 
+
+runtime: runtime.in Makefile
+	$(do_subst) < $(srcdir)/runtime.in > runtime
+	chmod 0640 runtime
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -31,7 +31,7 @@ then
 fi
 
 # Source runtime file
-_RUNTIMEFILE="@sysconfdir@"
+_RUNTIMEFILE="@libexecdir@/runtime"
 . "$_RUNTIMEFILE"
 
 case "$1" in
